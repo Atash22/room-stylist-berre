@@ -1,0 +1,18 @@
+# Data & model weights (too large for git, regenerate via notebook)
+data/
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Results (keep JSON summaries if you want, but raw logs are noisy)
+*.zip 
