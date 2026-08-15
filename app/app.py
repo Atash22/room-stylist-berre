@@ -26,7 +26,7 @@ from catalog import get_recommendations
 app = Flask(__name__)
 CORS(app)  # allow the browser demo page to call this API cross-origin
 
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "jfif", "bmp", "gif"}
 
 
 def _allowed_file(filename: str) -> bool:

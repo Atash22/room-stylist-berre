@@ -1,26 +1,27 @@
 """
 catalog.py
 ==========
-Minimal product lookup keyed by predicted style. In a real build this
-would be a scraped/exported snapshot of the Berre.ca catalog (Shopify
-Storefront API), but for the course project a small hand-labeled JSON
-is enough to demo the full pipeline end-to-end.
-"""
-
-"""
-catalog.py
-==========
 Product lookup keyed by predicted style. Entries below are real Berre.ca
 products with verified image URLs, prices, and product page links (pulled
 directly from berre.ca product pages).
 
-NOTE: for demo scope, two fully-verified products are used across all
-style buckets. To expand: visit the product page on berre.ca, grab the
+NOTE (demo scope): only 3 products are fully verified so far, so some
+style buckets still share a fallback pair rather than having a unique
+match. To expand further: visit the product page on berre.ca, grab the
 "src" of the main product image, and add an entry following the same
-shape.
+shape as the ones below.
 """
 
-REAL_PRODUCTS = [
+MID_CENTURY_PRODUCTS = [
+    {
+        "name": "Diana Boucle Sofa",
+        "price": "$1,799.00",
+        "url": "https://berre.ca/products/diana-boucle-sofa",
+        "image": "https://berre.ca/cdn/shop/products/diana-boucle-sofa-439683.webp?v=1752263119&width=800",
+    },
+]
+
+TRADITIONAL_PRODUCTS = [
     {
         "name": "Montego Living Room Set",
         "price": "$5,999.00",
@@ -35,16 +36,17 @@ REAL_PRODUCTS = [
     },
 ]
 
+# Demo-scope fallback: buckets without a unique verified match yet reuse
+# the closest available real products rather than showing nothing.
 CATALOG = {
-    "mid_century_modern": REAL_PRODUCTS,
-    "contemporary_scandinavian": REAL_PRODUCTS,
-    "traditional_classic": REAL_PRODUCTS,
-    "rustic_farmhouse": REAL_PRODUCTS,
-    "coastal_tropical": REAL_PRODUCTS,
-    "eclectic_industrial": REAL_PRODUCTS,
+    "mid_century_modern": MID_CENTURY_PRODUCTS,
+    "contemporary_scandinavian": MID_CENTURY_PRODUCTS,  # closest visual match available
+    "traditional_classic": TRADITIONAL_PRODUCTS,
+    "rustic_farmhouse": TRADITIONAL_PRODUCTS,
+    "coastal_tropical": TRADITIONAL_PRODUCTS,
+    "eclectic_industrial": TRADITIONAL_PRODUCTS,
 }
 
 
 def get_recommendations(style: str, top_k: int = 3):
     return CATALOG.get(style, [])[:top_k]
-
